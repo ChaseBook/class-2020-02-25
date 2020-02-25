@@ -9,9 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(purrr)
+library(ggplot2)
+library(ggthemes)
 ```
 
-```{r}
+```{r, echo=FALSE}
 roll_one_dice <- function() {
   sample(1:6, size = 1)
 } 
@@ -24,8 +26,13 @@ roll_two_dice <- function() {
 ```
 
 
-```{r}
-map_int(1:10, ~ roll_two_dice())
+```{r, echo=FALSE}
+data <- tibble(throws = map_int(1:1000000, ~ roll_two_dice()))
+
+data %>%
+  ggplot(mapping = aes(x = throws)) +
+  geom_bar() + 
+  theme_fivethirtyeight()
 ```
 
 
